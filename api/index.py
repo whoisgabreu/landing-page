@@ -49,6 +49,5 @@ def get_location():
 
 # Depois:
 
-
-def handler(request: Request):
+def handler(request):
     return app(request.environ, request.start_response)
