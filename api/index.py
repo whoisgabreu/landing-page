@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Request
 import requests  # Importação corrigida
 
 app = Flask(__name__, template_folder="templates")  # Ajuste do caminho
@@ -47,5 +47,8 @@ def get_location():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
-# Vercel exige que o app seja renomeado para 'handler'
-handler = app
+# Depois:
+
+
+def handler(request: Request):
+    return app(request.environ, request.start_response)
